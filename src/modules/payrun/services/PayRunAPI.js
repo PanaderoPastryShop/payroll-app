@@ -54,6 +54,32 @@ const downloadSIF = async (payRunId) => {
   }
 };
 
+const downloadReport = async (payRunId) => {
+  try {
+    const response = await fetch(`${PAYRUN_API_URL}/download-report/${payRunId}`, {
+      method: "GET",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to download report");
+    }
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const downloadLink = document.createElement("a");
+    downloadLink.href = url;
+    downloadLink.download = `Payroll_Report_${payRunId}.xlsx`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+
+    downloadLink.remove();
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error("Download error:", error);
+  }
+};
+
 const fetchPayRun = async () => {
   const response = await fetch(`${PAYRUN_API_URL}/all`);
   if (!response.ok) {
@@ -99,4 +125,4 @@ const processPayRun = async (startDate, endDate) => {
   }
 };
 
-export { fetchPayRun, fetchPayRunById, approvePayrun, processPayRun, downloadPayslip, downloadSIF }
+export { fetchPayRun, fetchPayRunById, approvePayrun, processPayRun, downloadPayslip, downloadSIF, downloadReport };

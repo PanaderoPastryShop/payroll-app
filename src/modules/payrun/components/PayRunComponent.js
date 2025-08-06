@@ -29,7 +29,7 @@ import tardinessIcon from "../../shared/assets/icon/payrun-deductions-tardiness.
 import totalEarningsIcon from "../../shared/assets/icon/total-payroll-cost-icon.png";
 import employeeSearchIcon from "../../shared/assets/icon/search-employee-icon.png";
 import { formatDecimalValue } from "../../shared/utils/dateAndNumberUtils";
-import { downloadPayslip, downloadSIF } from "../services/PayRunAPI";
+import { downloadPayslip, downloadSIF, downloadReport } from "../services/PayRunAPI";
 
 const PayRunComponent = ({ payrun }) => {
 
@@ -746,7 +746,6 @@ const PayRunComponent = ({ payrun }) => {
                             fontWeight: 600,
                             px: 3,
                             py: 1,
-                            mr: 2,
                             "&:hover": {
                                 bgcolor: "#4b240c",
                             },
@@ -772,6 +771,25 @@ const PayRunComponent = ({ payrun }) => {
                         }}
                     >
                         Download SIF
+                    </Button>
+
+                    {/* Download Payroll Report */}
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => downloadReport(payrun.payRunId)}
+                        sx={{
+                            textTransform: "none",
+                            borderRadius: 2,
+                            fontWeight: 600,
+                            px: 3,
+                            py: 1,
+                            "&:hover": {
+                                bgcolor: "#4b240c",
+                            },
+                        }}
+                    >
+                        Download Report
                     </Button>
                 </Box>
             )}
